@@ -423,7 +423,7 @@ contract test_token is SeroInterface ,Owner {
 }
 `
 var safeMath=`
-pragma solidity 0.4.25;
+pragma solidity >=0.4.25 <0.6.8;
 
 /**
  * @title SafeMath
