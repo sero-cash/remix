@@ -234,7 +234,6 @@ export class LandingPage extends ViewPlugin {
           </div>
           <div class="${css.jumboBtnContainer} px-5">
             <button class="btn btn-primary mx-3" href="#" onclick=${() => learnMore()} role="button">Learn more</button>
-            // <button class="btn btn-secondary" onclick=${() => switchToPreviousVersion()}>Use previous version</button>
           </div>
         </div><!-- end of jumbotron -->
       </div><!-- end of jumbotron container -->

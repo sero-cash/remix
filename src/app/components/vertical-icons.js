@@ -253,8 +253,7 @@ export class VerticalIcons extends Plugin {
         ${this.iconKind['testing']}
         ${this.iconKind['analysis']}
         ${this.iconKind['debugging']}
-        ${this.iconKind['none']}
-
+        ${this.iconKind['settings']}
       </div>
     `
     return this.view
