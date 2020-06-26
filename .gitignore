@@ -3,7 +3,6 @@
 node_modules
 docs/_build
 reports
-soljson.js
 soljson.js.*
 npm-debug.log*
 remix
