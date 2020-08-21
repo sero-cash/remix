@@ -189,16 +189,16 @@ class AutoCompletePopup {
 
   extendAutocompletion () {
     // TODO: this is not using the appManager interface. Terminal should be put as module
-    // this.opts.appManager.event.on('activate', async (profile) => {
-    //   if (!profile.methods) return
-    //   profile.methods.forEach((method) => {
-    //     const key = `remix.call({name: '${profile.name}', key:'${method}', payload: []}).then((result) => { console.log(result) }).catch((error) => { console.log(error) })`
-    //     const keyValue = {}
-    //     keyValue[key] = `call ${profile.name} - ${method}`
-    //     if (this.extraCommands.includes(keyValue)) return
-    //     this.extraCommands.push(keyValue)
-    //   })
-    // })
+    this.opts.appManager.event.on('activate', async (profile) => {
+      if (!profile.methods) return
+      profile.methods.forEach((method) => {
+        const key = `remix.call({name: '${profile.name}', key:'${method}', payload: []}).then((result) => { console.log(result) }).catch((error) => { console.log(error) })`
+        const keyValue = {}
+        keyValue[key] = `call ${profile.name} - ${method}`
+        if (this.extraCommands.includes(keyValue)) return
+        this.extraCommands.push(keyValue)
+      })
+    })
   }
 }
 

@@ -49,10 +49,10 @@ import { MainView } from './app/panels/main-view'
 import { ThemeModule } from './app/tabs/theme-module'
 import { NetworkModule } from './app/tabs/network-module'
 import { Web3ProviderModule } from './app/tabs/web3-provider'
-// import { SidePanel } from './app/components/side-panel'
+import { SidePanel } from './app/components/side-panel'
 import { HiddenPanel } from './app/components/hidden-panel'
-// import { VerticalIcons } from './app/components/vertical-icons'
-// import { LandingPage } from './app/ui/landing-page/landing-page'
+import { VerticalIcons } from './app/components/vertical-icons'
+import { LandingPage } from './app/ui/landing-page/landing-page'
 import { MainPanel } from './app/components/main-panel'
 import FetchAndCompile from './app/compiler/compiler-sourceVerifier-fetchAndCompile'
 
@@ -234,9 +234,9 @@ async function run () {
 
   // APP_MANAGER
   const appManager = new RemixAppManager({})
-  // const workspace = appManager.pluginLoader.get()
-  // const engine = new Engine(appManager)
-  // await engine.onload()
+  const workspace = appManager.pluginLoader.get()
+  const engine = new Engine(appManager)
+  await engine.onload()
 
   // SERVICES
   // ----------------- import content servive ------------------------
@@ -281,7 +281,7 @@ async function run () {
   // -------------------Terminal----------------------------------------
 
   const terminal = new Terminal(
-    {blockchain },
+    { appManager, blockchain },
     {
       getPosition: (event) => {
         var limitUp = 36
@@ -297,55 +297,56 @@ async function run () {
 
   const contextualListener = new ContextualListener({editor})
 
-  // engine.register([
-  //   contentImport,
-  //   themeModule,
-  //   editor,
-  //   fileManager,
-  //   compilerMetadataGenerator,
-  //   compilersArtefacts,
-  //   networkModule,
-  //   offsetToLineColumnConverter,
-  //   contextualListener,
-  //   terminal,
-  //   web3Provider,
-  //   fetchAndCompile
-  // ])
+  engine.register([
+    contentImport,
+    themeModule,
+    editor,
+    fileManager,
+    compilerMetadataGenerator,
+    compilersArtefacts,
+    networkModule,
+    offsetToLineColumnConverter,
+    contextualListener,
+    terminal,
+    web3Provider,
+    fetchAndCompile
+  ])
 
   // LAYOUT & SYSTEM VIEWS
   const appPanel = new MainPanel()
-  const mainview = new MainView(contextualListener, editor, appPanel, fileManager, terminal)
+  const mainview = new MainView(contextualListener, editor, appPanel, fileManager, appManager, terminal)
   registry.put({ api: mainview, name: 'mainview' })
 
-  // engine.register(appPanel)
+  engine.register(appPanel)
 
   // those views depend on app_manager
-  // const menuicons = new VerticalIcons(appManager)
-  // const landingPage = new LandingPage(appManager, menuicons)
-  // const sidePanel = new SidePanel(appManager, menuicons)
+  const menuicons = new VerticalIcons(appManager)
+  const landingPage = new LandingPage(appManager, menuicons)
+  const sidePanel = new SidePanel(appManager, menuicons)
   const hiddenPanel = new HiddenPanel()
-  // const pluginManagerComponent = new PluginManagerComponent(appManager)
+  const pluginManagerComponent = new PluginManagerComponent(appManager, engine)
   const filePanel = new FilePanel(appManager)
   let settings = new SettingsTab(
     registry.get('config').api,
-    editor
+    editor,
+    appManager
   )
 
   // adding Views to the DOM
   self._view.mainpanel.appendChild(mainview.render())
-  // self._view.iconpanel.appendChild(menuicons.render())
-  // self._view.sidepanel.appendChild(sidePanel.render())
+  self._view.iconpanel.appendChild(menuicons.render())
+  self._view.sidepanel.appendChild(sidePanel.render())
   document.body.appendChild(hiddenPanel.render()) // Hidden Panel is display none, it can be directly on body
 
-  // engine.register([
-  //   menuicons,
-  //   landingPage,
-  //   hiddenPanel,
-  //   sidePanel,
-  //   pluginManagerComponent,
-  //   filePanel,
-  //   settings
-  // ])
+  engine.register([
+    menuicons,
+    landingPage,
+    hiddenPanel,
+    sidePanel,
+    pluginManagerComponent,
+    filePanel,
+    settings
+  ])
 
   // CONTENT VIEWS & DEFAULT PLUGINS
   const compileTab = new CompileTab(
@@ -373,33 +374,34 @@ async function run () {
     registry.get('filemanager').api,
     filePanel,
     compileTab,
+    appManager,
     new Renderer()
   )
 
-  // engine.register([
-  //   compileTab,
-  //   run,
-  //   debug,
-  //   analysis,
-  //   test,
-  //   filePanel.remixdHandle
-  // ])
+  engine.register([
+    compileTab,
+    run,
+    debug,
+    analysis,
+    test,
+    filePanel.remixdHandle
+  ])
 
-  try {
-    // engine.register(await appManager.registeredPlugins())
-  } catch (e) {
-    console.log('couldn\'t register iframe plugins', e.message)
-  }
+  // try {
+  //   engine.register(await appManager.registeredPlugins())
+  // } catch (e) {
+  //   console.log('couldn\'t register iframe plugins', e.message)
+  // }
 
-  // await appManager.activatePlugin(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'web3Provider', 'offsetToLineColumnConverter'])
-  // await appManager.activatePlugin(['mainPanel', 'menuicons'])
-  // await appManager.activatePlugin(['home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings', 'contextualListener', 'scriptRunner', 'terminal', 'fetchAndCompile'])
+  await appManager.activatePlugin(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'web3Provider', 'offsetToLineColumnConverter'])
+  await appManager.activatePlugin(['mainPanel', 'menuicons'])
+  await appManager.activatePlugin(['home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings', 'contextualListener', 'scriptRunner', 'terminal', 'fetchAndCompile'])
 
   // Set workspace after initial activation
-  // if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
+  if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
 
   // Load and start the service who manager layout and frame
-  const framingService = new FramingService(mainview, this._components.resizeFeature)
+  const framingService = new FramingService(sidePanel, menuicons, mainview, this._components.resizeFeature)
   framingService.start()
 
   // get the file list from the parent iframe
@@ -422,6 +424,6 @@ async function run () {
   }
 
   if (isElectron()) {
-    // appManager.activatePlugin('remixd')
+    appManager.activatePlugin('remixd')
   }
 }

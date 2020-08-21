@@ -1,25 +1,25 @@
 export class FramingService {
 
-  constructor ( mainView, resizeFeature) {
-    // this.sidePanel = sidePanel
-    // this.verticalIcon = verticalIcon
+  constructor (sidePanel, verticalIcon, mainView, resizeFeature) {
+    this.sidePanel = sidePanel
+    this.verticalIcon = verticalIcon
     this.mainPanel = mainView.getAppPanel()
     this.mainView = mainView
     this.resizeFeature = resizeFeature
   }
 
   start () {
-    // this.sidePanel.events.on('toggle', () => {
-    //   this.resizeFeature.panel.clientWidth !== 0 ? this.resizeFeature.hidePanel() : this.resizeFeature.showPanel()
-    // })
-    // this.sidePanel.events.on('showing', () => {
-    //   this.resizeFeature.panel.clientWidth === 0 ? this.resizeFeature.showPanel() : ''
-    // })
+    this.sidePanel.events.on('toggle', () => {
+      this.resizeFeature.panel.clientWidth !== 0 ? this.resizeFeature.hidePanel() : this.resizeFeature.showPanel()
+    })
+    this.sidePanel.events.on('showing', () => {
+      this.resizeFeature.panel.clientWidth === 0 ? this.resizeFeature.showPanel() : ''
+    })
     this.mainPanel.events.on('toggle', () => {
       this.resizeFeature.showPanel()
     })
 
-    // this.verticalIcon.select('fileExplorers')
+    this.verticalIcon.select('fileExplorers')
 
     document.addEventListener('keypress', (e) => {
       if (e.shiftKey && e.ctrlKey) {

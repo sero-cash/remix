@@ -18,7 +18,7 @@ var css = csjs`
 `
 
 export class MainView {
-  constructor (contextualListener, editor, mainPanel, fileManager, terminal) {
+  constructor (contextualListener, editor, mainPanel, fileManager, appManager, terminal) {
     var self = this
     self.event = new EventManager()
     self._view = {}
@@ -30,6 +30,7 @@ export class MainView {
     self.txListener = globalRegistry.get('txlistener').api
     self._components.terminal = terminal
     self._components.contextualListener = contextualListener
+    this.appManager = appManager
     this.init()
   }
   showApp (name) {
@@ -49,7 +50,7 @@ export class MainView {
       fileManager: self._components.registry.get('filemanager').api
     }
 
-    self.tabProxy = new TabProxy(self.fileManager, self.editor)
+    self.tabProxy = new TabProxy(self.fileManager, self.editor, self.appManager)
     /*
       We listen here on event from the tab component to display / hide the editor and mainpanel
       depending on the content that should be displayed

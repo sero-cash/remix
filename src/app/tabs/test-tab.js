@@ -33,12 +33,12 @@ module.exports = class TestTab extends ViewPlugin {
     this.runningTestsNumber = 0
     this.readyTestsNumber = 0
     this.areTestsRunning = false
-    // appManager.event.on('activate', (name) => {
-    //   if (name === 'solidity') this.updateRunAction(fileManager.currentFile())
-    // })
-    // appManager.event.on('deactivate', (name) => {
-    //   if (name === 'solidity') this.updateRunAction(fileManager.currentFile())
-    // })
+    appManager.event.on('activate', (name) => {
+      if (name === 'solidity') this.updateRunAction(fileManager.currentFile())
+    })
+    appManager.event.on('deactivate', (name) => {
+      if (name === 'solidity') this.updateRunAction(fileManager.currentFile())
+    })
   }
 
   onActivationInternal () {

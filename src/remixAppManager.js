@@ -1,5 +1,5 @@
 /* global localStorage, fetch */
-import { PluginManager } from '@remixproject/engine'
+import { PluginManager, IframePlugin } from '@remixproject/engine'
 import { EventEmitter } from 'events'
 import QueryParams from './lib/query-params'
 import { PermissionHandler } from './app/ui/persmission-handler'
@@ -23,8 +23,8 @@ export class RemixAppManager extends PluginManager {
   constructor (plugins) {
     super()
     this.event = new EventEmitter()
-    // this.pluginsDirectory = 'https://raw.githubusercontent.com/ethereum/remix-plugins-directory/master/build/metadata.json'
-    // this.pluginLoader = new PluginLoader()
+    this.pluginsDirectory = 'https://raw.githubusercontent.com/ethereum/remix-plugins-directory/master/build/metadata.json'
+    this.pluginLoader = new PluginLoader()
     this.permissionHandler = new PermissionHandler()
   }
 
@@ -50,8 +50,8 @@ export class RemixAppManager extends PluginManager {
   }
 
   onPluginActivated (plugin) {
-    // this.pluginLoader.set(plugin, this.actives)
-    // this.event.emit('activate', plugin)
+    this.pluginLoader.set(plugin, this.actives)
+    this.event.emit('activate', plugin)
   }
 
   getAll () {
@@ -65,8 +65,8 @@ export class RemixAppManager extends PluginManager {
   }
 
   onPluginDeactivated (plugin) {
-    // this.pluginLoader.set(plugin, this.actives)
-    // this.event.emit('deactivate', plugin)
+    this.pluginLoader.set(plugin, this.actives)
+    this.event.emit('deactivate', plugin)
   }
 
   onRegistration (plugin) {
@@ -74,18 +74,18 @@ export class RemixAppManager extends PluginManager {
   }
 
   async ensureActivated (apiName) {
-    // await this.activatePlugin(apiName)
-    // this.event.emit('ensureActivated', apiName)
+    await this.activatePlugin(apiName)
+    this.event.emit('ensureActivated', apiName)
   }
 
   async ensureDeactivated (apiName) {
-    // await this.deactivatePlugin(apiName)
-    // this.event.emit('ensureDeactivated', apiName)
+    await this.deactivatePlugin(apiName)
+    this.event.emit('ensureDeactivated', apiName)
   }
 
   deactivatePlugin (name) {
-    // if (requiredModules.includes(name)) return
-    // super.deactivatePlugin(name)
+    if (requiredModules.includes(name)) return
+    super.deactivatePlugin(name)
   }
 
   isRequired (name) {
