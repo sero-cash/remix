@@ -74,18 +74,18 @@ export class RemixAppManager extends PluginManager {
   }
 
   async ensureActivated (apiName) {
-    await this.activatePlugin(apiName)
-    this.event.emit('ensureActivated', apiName)
+    // await this.activatePlugin(apiName)
+    // this.event.emit('ensureActivated', apiName)
   }
 
   async ensureDeactivated (apiName) {
-    await this.deactivatePlugin(apiName)
-    this.event.emit('ensureDeactivated', apiName)
+    // await this.deactivatePlugin(apiName)
+    // this.event.emit('ensureDeactivated', apiName)
   }
 
   deactivatePlugin (name) {
-    if (requiredModules.includes(name)) return
-    super.deactivatePlugin(name)
+    // if (requiredModules.includes(name)) return
+    // super.deactivatePlugin(name)
   }
 
   isRequired (name) {
