@@ -321,10 +321,10 @@ async function run () {
 
   // those views depend on app_manager
   const menuicons = new VerticalIcons(appManager)
-  const landingPage = new LandingPage(appManager, menuicons)
+  // const landingPage = new LandingPage(appManager, menuicons)
   const sidePanel = new SidePanel(appManager, menuicons)
   const hiddenPanel = new HiddenPanel()
-  const pluginManagerComponent = new PluginManagerComponent(appManager)
+  // const pluginManagerComponent = new PluginManagerComponent(appManager)
   const filePanel = new FilePanel(appManager)
   let settings = new SettingsTab(
     registry.get('config').api,

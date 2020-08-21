@@ -6,10 +6,9 @@ const globalRegistry = require('../../global/registry')
 require('remix-tabs')
 
 export class TabProxy {
-  constructor (fileManager, editor, appManager) {
+  constructor (fileManager, editor) {
     this.event = new EventEmitter()
     this.fileManager = fileManager
-    this.appManager = appManager
     this.editor = editor
     this.data = {}
     this._view = {}
@@ -57,33 +56,6 @@ export class TabProxy {
       this.removeTab(oldName)
     })
 
-    appManager.event.on('activate', ({ name, location, displayName, icon }) => {
-      if (location === 'mainPanel') {
-        this.addTab(
-          name,
-          displayName,
-          () => this.event.emit('switchApp', name),
-          () => {
-            this.event.emit('closeApp', name)
-            this.appManager.deactivatePlugin(name)
-          },
-          icon
-        )
-        this.switchTab(name)
-      }
-    })
-
-    appManager.event.on('deactivate', (profile) => {
-      this.removeTab(profile.name)
-    })
-
-    appManager.event.on('ensureActivated', (name) => {
-      if (name === 'home') {
-        // if someone force activation of home, we switch to it
-        this.event.emit('switchApp', name)
-        this._view.filetabs.activateTab(name)
-      }
-    })
   }
   updateImgStyles () {
     const images = this._view.filetabs.getElementsByClassName('image')
