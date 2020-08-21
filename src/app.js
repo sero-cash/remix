@@ -234,7 +234,7 @@ async function run () {
 
   // APP_MANAGER
   const appManager = new RemixAppManager({})
-  const workspace = appManager.pluginLoader.get()
+  // const workspace = appManager.pluginLoader.get()
   const engine = new Engine(appManager)
   await engine.onload()
 
@@ -398,7 +398,7 @@ async function run () {
   await appManager.activatePlugin(['home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings', 'contextualListener', 'scriptRunner', 'terminal', 'fetchAndCompile'])
 
   // Set workspace after initial activation
-  if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
+  // if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
 
   // Load and start the service who manager layout and frame
   const framingService = new FramingService(sidePanel, menuicons, mainview, this._components.resizeFeature)
