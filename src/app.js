@@ -320,9 +320,9 @@ async function run () {
   // engine.register(appPanel)
 
   // those views depend on app_manager
-  const menuicons = new VerticalIcons(appManager)
+  // const menuicons = new VerticalIcons(appManager)
   // const landingPage = new LandingPage(appManager, menuicons)
-  const sidePanel = new SidePanel(appManager, menuicons)
+  // const sidePanel = new SidePanel(appManager, menuicons)
   const hiddenPanel = new HiddenPanel()
   // const pluginManagerComponent = new PluginManagerComponent(appManager)
   const filePanel = new FilePanel(appManager)
@@ -333,7 +333,7 @@ async function run () {
 
   // adding Views to the DOM
   self._view.mainpanel.appendChild(mainview.render())
-  self._view.iconpanel.appendChild(menuicons.render())
+  // self._view.iconpanel.appendChild(menuicons.render())
   self._view.sidepanel.appendChild(sidePanel.render())
   document.body.appendChild(hiddenPanel.render()) // Hidden Panel is display none, it can be directly on body
 
@@ -399,7 +399,7 @@ async function run () {
   // if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
 
   // Load and start the service who manager layout and frame
-  const framingService = new FramingService(sidePanel, menuicons, mainview, this._components.resizeFeature)
+  const framingService = new FramingService(sidePanel, mainview, this._components.resizeFeature)
   framingService.start()
 
   // get the file list from the parent iframe

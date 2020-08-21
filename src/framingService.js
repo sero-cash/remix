@@ -1,8 +1,8 @@
 export class FramingService {
 
-  constructor (sidePanel, verticalIcon, mainView, resizeFeature) {
+  constructor (sidePanel, mainView, resizeFeature) {
     this.sidePanel = sidePanel
-    this.verticalIcon = verticalIcon
+    // this.verticalIcon = verticalIcon
     this.mainPanel = mainView.getAppPanel()
     this.mainView = mainView
     this.resizeFeature = resizeFeature
@@ -19,7 +19,7 @@ export class FramingService {
       this.resizeFeature.showPanel()
     })
 
-    this.verticalIcon.select('fileExplorers')
+    // this.verticalIcon.select('fileExplorers')
 
     document.addEventListener('keypress', (e) => {
       if (e.shiftKey && e.ctrlKey) {
