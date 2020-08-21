@@ -1,7 +1,7 @@
 export class FramingService {
 
-  constructor (sidePanel, mainView, resizeFeature) {
-    this.sidePanel = sidePanel
+  constructor ( mainView, resizeFeature) {
+    // this.sidePanel = sidePanel
     // this.verticalIcon = verticalIcon
     this.mainPanel = mainView.getAppPanel()
     this.mainView = mainView

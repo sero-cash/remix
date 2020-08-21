@@ -399,7 +399,7 @@ async function run () {
   // if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
 
   // Load and start the service who manager layout and frame
-  const framingService = new FramingService(sidePanel, mainview, this._components.resizeFeature)
+  const framingService = new FramingService(mainview, this._components.resizeFeature)
   framingService.start()
 
   // get the file list from the parent iframe
