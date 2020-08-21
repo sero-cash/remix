@@ -81,9 +81,7 @@ class PluginManagerComponent extends ViewPlugin {
     }
     this.localPlugin = new LocalPlugin()
     this.filter = ''
-    this.appManager.event.on('activate', () => { this.reRender() })
-    this.appManager.event.on('deactivate', () => { this.reRender() })
-    this.appManager.event.on('added', () => { this.reRender() })
+
     this.engine = engine
   }
 
