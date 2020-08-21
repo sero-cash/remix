@@ -18,7 +18,7 @@ var css = csjs`
 `
 
 export class MainView {
-  constructor (contextualListener, editor, mainPanel, fileManager, appManager, terminal) {
+  constructor (contextualListener, editor, mainPanel, fileManager, terminal) {
     var self = this
     self.event = new EventManager()
     self._view = {}
@@ -30,7 +30,6 @@ export class MainView {
     self.txListener = globalRegistry.get('txlistener').api
     self._components.terminal = terminal
     self._components.contextualListener = contextualListener
-    this.appManager = appManager
     this.init()
   }
   showApp (name) {
