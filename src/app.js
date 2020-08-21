@@ -235,8 +235,8 @@ async function run () {
   // APP_MANAGER
   const appManager = new RemixAppManager({})
   // const workspace = appManager.pluginLoader.get()
-  const engine = new Engine(appManager)
-  await engine.onload()
+  // const engine = new Engine(appManager)
+  // await engine.onload()
 
   // SERVICES
   // ----------------- import content servive ------------------------
@@ -281,7 +281,7 @@ async function run () {
   // -------------------Terminal----------------------------------------
 
   const terminal = new Terminal(
-    { appManager, blockchain },
+    {blockchain },
     {
       getPosition: (event) => {
         var limitUp = 36
@@ -297,39 +297,38 @@ async function run () {
 
   const contextualListener = new ContextualListener({editor})
 
-  engine.register([
-    contentImport,
-    themeModule,
-    editor,
-    fileManager,
-    compilerMetadataGenerator,
-    compilersArtefacts,
-    networkModule,
-    offsetToLineColumnConverter,
-    contextualListener,
-    terminal,
-    web3Provider,
-    fetchAndCompile
-  ])
+  // engine.register([
+  //   contentImport,
+  //   themeModule,
+  //   editor,
+  //   fileManager,
+  //   compilerMetadataGenerator,
+  //   compilersArtefacts,
+  //   networkModule,
+  //   offsetToLineColumnConverter,
+  //   contextualListener,
+  //   terminal,
+  //   web3Provider,
+  //   fetchAndCompile
+  // ])
 
   // LAYOUT & SYSTEM VIEWS
   const appPanel = new MainPanel()
-  const mainview = new MainView(contextualListener, editor, appPanel, fileManager, appManager, terminal)
+  const mainview = new MainView(contextualListener, editor, appPanel, fileManager, terminal)
   registry.put({ api: mainview, name: 'mainview' })
 
-  engine.register(appPanel)
+  // engine.register(appPanel)
 
   // those views depend on app_manager
   const menuicons = new VerticalIcons(appManager)
   const landingPage = new LandingPage(appManager, menuicons)
   const sidePanel = new SidePanel(appManager, menuicons)
   const hiddenPanel = new HiddenPanel()
-  const pluginManagerComponent = new PluginManagerComponent(appManager, engine)
+  const pluginManagerComponent = new PluginManagerComponent(appManager)
   const filePanel = new FilePanel(appManager)
   let settings = new SettingsTab(
     registry.get('config').api,
-    editor,
-    appManager
+    editor
   )
 
   // adding Views to the DOM
@@ -338,15 +337,15 @@ async function run () {
   self._view.sidepanel.appendChild(sidePanel.render())
   document.body.appendChild(hiddenPanel.render()) // Hidden Panel is display none, it can be directly on body
 
-  engine.register([
-    menuicons,
-    landingPage,
-    hiddenPanel,
-    sidePanel,
-    pluginManagerComponent,
-    filePanel,
-    settings
-  ])
+  // engine.register([
+  //   menuicons,
+  //   landingPage,
+  //   hiddenPanel,
+  //   sidePanel,
+  //   pluginManagerComponent,
+  //   filePanel,
+  //   settings
+  // ])
 
   // CONTENT VIEWS & DEFAULT PLUGINS
   const compileTab = new CompileTab(
@@ -374,18 +373,17 @@ async function run () {
     registry.get('filemanager').api,
     filePanel,
     compileTab,
-    appManager,
     new Renderer()
   )
 
-  engine.register([
-    compileTab,
-    run,
-    debug,
-    analysis,
-    test,
-    filePanel.remixdHandle
-  ])
+  // engine.register([
+  //   compileTab,
+  //   run,
+  //   debug,
+  //   analysis,
+  //   test,
+  //   filePanel.remixdHandle
+  // ])
 
   try {
     // engine.register(await appManager.registeredPlugins())
@@ -393,9 +391,9 @@ async function run () {
     console.log('couldn\'t register iframe plugins', e.message)
   }
 
-  await appManager.activatePlugin(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'web3Provider', 'offsetToLineColumnConverter'])
-  await appManager.activatePlugin(['mainPanel', 'menuicons'])
-  await appManager.activatePlugin(['home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings', 'contextualListener', 'scriptRunner', 'terminal', 'fetchAndCompile'])
+  // await appManager.activatePlugin(['contentImport', 'theme', 'editor', 'fileManager', 'compilerMetadata', 'compilerArtefacts', 'network', 'web3Provider', 'offsetToLineColumnConverter'])
+  // await appManager.activatePlugin(['mainPanel', 'menuicons'])
+  // await appManager.activatePlugin(['home', 'sidePanel', 'hiddenPanel', 'pluginManager', 'fileExplorers', 'settings', 'contextualListener', 'scriptRunner', 'terminal', 'fetchAndCompile'])
 
   // Set workspace after initial activation
   // if (Array.isArray(workspace)) await appManager.activatePlugin(workspace)
@@ -424,6 +422,6 @@ async function run () {
   }
 
   if (isElectron()) {
-    appManager.activatePlugin('remixd')
+    // appManager.activatePlugin('remixd')
   }
 }
