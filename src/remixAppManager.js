@@ -50,8 +50,8 @@ export class RemixAppManager extends PluginManager {
   }
 
   onPluginActivated (plugin) {
-    this.pluginLoader.set(plugin, this.actives)
-    this.event.emit('activate', plugin)
+    // this.pluginLoader.set(plugin, this.actives)
+    // this.event.emit('activate', plugin)
   }
 
   getAll () {
@@ -65,8 +65,8 @@ export class RemixAppManager extends PluginManager {
   }
 
   onPluginDeactivated (plugin) {
-    this.pluginLoader.set(plugin, this.actives)
-    this.event.emit('deactivate', plugin)
+    // this.pluginLoader.set(plugin, this.actives)
+    // this.event.emit('deactivate', plugin)
   }
 
   onRegistration (plugin) {
