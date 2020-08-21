@@ -388,7 +388,7 @@ async function run () {
   ])
 
   try {
-    engine.register(await appManager.registeredPlugins())
+    // engine.register(await appManager.registeredPlugins())
   } catch (e) {
     console.log('couldn\'t register iframe plugins', e.message)
   }

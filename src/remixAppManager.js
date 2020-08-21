@@ -23,8 +23,8 @@ export class RemixAppManager extends PluginManager {
   constructor (plugins) {
     super()
     this.event = new EventEmitter()
-    this.pluginsDirectory = 'https://raw.githubusercontent.com/ethereum/remix-plugins-directory/master/build/metadata.json'
-    this.pluginLoader = new PluginLoader()
+    // this.pluginsDirectory = 'https://raw.githubusercontent.com/ethereum/remix-plugins-directory/master/build/metadata.json'
+    // this.pluginLoader = new PluginLoader()
     this.permissionHandler = new PermissionHandler()
   }
 
@@ -93,9 +93,9 @@ export class RemixAppManager extends PluginManager {
   }
 
   async registeredPlugins () {
-    const res = await fetch(this.pluginsDirectory)
-    const plugins = await res.json()
-    return plugins.map(plugin => new IframePlugin(plugin))
+    // const res = await fetch(this.pluginsDirectory)
+    // const plugins = await res.json()
+    // return plugins.map(plugin => new IframePlugin(plugin))
   }
 }
 
