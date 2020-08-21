@@ -49,10 +49,10 @@ import { MainView } from './app/panels/main-view'
 import { ThemeModule } from './app/tabs/theme-module'
 import { NetworkModule } from './app/tabs/network-module'
 import { Web3ProviderModule } from './app/tabs/web3-provider'
-import { SidePanel } from './app/components/side-panel'
+// import { SidePanel } from './app/components/side-panel'
 import { HiddenPanel } from './app/components/hidden-panel'
-import { VerticalIcons } from './app/components/vertical-icons'
-import { LandingPage } from './app/ui/landing-page/landing-page'
+// import { VerticalIcons } from './app/components/vertical-icons'
+// import { LandingPage } from './app/ui/landing-page/landing-page'
 import { MainPanel } from './app/components/main-panel'
 import FetchAndCompile from './app/compiler/compiler-sourceVerifier-fetchAndCompile'
 
@@ -334,7 +334,7 @@ async function run () {
   // adding Views to the DOM
   self._view.mainpanel.appendChild(mainview.render())
   // self._view.iconpanel.appendChild(menuicons.render())
-  self._view.sidepanel.appendChild(sidePanel.render())
+  // self._view.sidepanel.appendChild(sidePanel.render())
   document.body.appendChild(hiddenPanel.render()) // Hidden Panel is display none, it can be directly on body
 
   // engine.register([
